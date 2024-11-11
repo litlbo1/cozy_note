@@ -1,0 +1,29 @@
+name: cozy_note
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.7.0
+  cloud_firestore: ^5.4.5
+  animations: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/img1.jpg
+    - images/img2.jpg
+    - images/img3.jpg
+    - images/img4.jpg
+    - images/img5.jpg
+    - images/img6.jpg
