@@ -16,9 +16,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
   final CollectionReference _todos = FirebaseFirestore.instance.collection('groups');
 
+  Color? ccol;
+
   void _addGroup() async {
     if (_controller.text.isNotEmpty) {
-      await _todos.add({'group': _controller.text, 'created_at': Timestamp.now()});
+      await _todos.add({'group': _controller.text, 'group_color': ccol!.value, 'created_at': Timestamp.now()});
       _controller.clear();
     }
   }
@@ -95,19 +97,84 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   ),
                 ),
                 actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("Отмена"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                  Center(
+                    child: Row(children: [
+                    GestureDetector(
+                      onTap: () {
+                          setState(() {
+                          ccol = const Color(0xffe9c46a);
+                        });
+                        if (_formKey.currentState!.validate()) {
                         _addGroup();
                         Navigator.of(context).pop();
                       }
-                    },
-                    child: const Text("Сохранить"),
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xffe9c46a)),
+                        child: const Center(child: Text("Orange")),),
+                    ),
+                    
+                    const SizedBox(width: 20,),
+                  GestureDetector(
+                      onTap: () {
+                          setState(() {
+                          ccol = const Color(0xff2a9d8f);
+                        });
+                        if (_formKey.currentState!.validate()) {
+                        _addGroup();
+                        Navigator.of(context).pop();
+                      }
+                      },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xff2a9d8f)),
+                      child: const Center(child: Text("blue")),),
                   ),
+
+                  const SizedBox(width: 20,),
+
+                  GestureDetector(
+                        onTap: () {
+                          setState(() {
+                          ccol = const Color(0xffe76f51);
+                        });
+                        if (_formKey.currentState!.validate()) {
+                        _addGroup();
+                        Navigator.of(context).pop();
+                      }
+                      },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xffe76f51)),
+                      child: const Center(child: Text("red")),),
+                  ),
+                    ],),
+                  ),
+
+                  const SizedBox(height: 30,),
+                  Row(
+                    children: [
+                      TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text("Отмена", style: TextStyle(color: Color.fromARGB(255, 13, 96, 56)),),
+                  ),
+                  // ElevatedButton(onPressed: () {}, child: const Text("тема", style: TextStyle(color: Colors.indigo),)),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     if (_formKey.currentState!.validate()) {
+                  //       _addGroup();
+                  //       Navigator.of(context).pop();
+                  //     }
+                  //   },
+                  //   child: const Text("Сохранить", style: TextStyle(color: Colors.indigo)),
+                  // ),
+                    ],
+                  )
+                  
                 ],
               );
             },
@@ -139,7 +206,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                   child: OpenContainer(
-                    closedColor: Colors.yellow,
+                    closedColor: Color(groupData['group_color']),
                     openColor: const Color(0xff121212),
                     closedElevation: 5.0,
                     closedShape: RoundedRectangleBorder(
@@ -149,7 +216,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     closedBuilder: (context, openContainer) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.yellow,
+                        color: Color(groupData['group_color']),
                         boxShadow: [
                           BoxShadow(
                             color: const Color.fromARGB(255, 232, 232, 232).withOpacity(0.2),
