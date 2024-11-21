@@ -138,27 +138,27 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 onLongPress: () => _showDeleteConfirmation(context, groupData.id),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                  child: OpenContainer(
-                    closedColor: Colors.yellow,
-                    openColor: const Color(0xff121212),
-                    closedElevation: 5.0,
-                    closedShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    transitionDuration: const Duration(milliseconds: 600),
-                    closedBuilder: (context, openContainer) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.yellow,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 232, 232, 232).withOpacity(0.2),
-                            spreadRadius: 8,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
+                  // child: OpenContainer(
+                  //   closedColor: Colors.yellow,
+                  //   openColor: const Color(0xff121212),
+                  //   closedElevation: 5.0,
+                  //   closedShape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(20),
+                  //   ),
+                  //   transitionDuration: const Duration(milliseconds: 600),
+                  //   closedBuilder: (context, openContainer) => Container(
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(20),
+                  //       color: Colors.yellow,
+                  //       boxShadow: [
+                  //         BoxShadow(
+                  //           color: const Color.fromARGB(255, 232, 232, 232).withOpacity(0.2),
+                  //           spreadRadius: 8,
+                  //           blurRadius: 7,
+                  //           offset: const Offset(0, 3),
+                  //         ),
+                  //       ],
+                  //     ),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30, bottom: 30, left: 30, right: 30),
                         child: Container(
@@ -183,10 +183,10 @@ class _LobbyScreenState extends State<LobbyScreen> {
                         ),
                       ),
                     ),
-                    openBuilder: (context, _) => TodoListScreen(groupId: groupData.id),
-                  ),
-                ),
-              );
+                    // openBuilder: (context, _) => TodoListScreen(groupId: groupData.id),
+                  );
+              //   ),
+              // );
             },
           );
         },
