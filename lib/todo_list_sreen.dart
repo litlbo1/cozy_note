@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 
 class TodoListScreen extends StatefulWidget {
   final String groupId;
@@ -87,18 +88,38 @@ class _TodoListScreenState extends State<TodoListScreen> {
             child: StreamBuilder<QuerySnapshot>(
               stream: _todos?.orderBy('created_at', descending: true).snapshots(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
                 final tasks = snapshot.data!.docs;
+
                 return ListView.builder(
                   itemCount: tasks.length,
                   itemBuilder: (context, index) {
                     final task = tasks[index];
-                    return ListTile(
-                      title: Text(task['task'], style: const TextStyle(color: Colors.white, fontSize: 20),),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () => _removeTodoAtIndex(task.id),
+
+                    return SwipeActionCell(
+                      key: ValueKey(task.id),
+                      trailingActions: [
+                        SwipeAction(
+                          title: "del",
+                          onTap: (handler) async {
+                            await handler(true); // Закрыть свайп после выполнения
+                            _removeTodoAtIndex(task.id);
+                          },
+                          color: Colors.red,
+                        ),
+                      ],
+                      child: Container(
+                      color:const  Color(0xff121212), // Устанавливаем цвет фона
+                      child: ListTile(
+                        title: Text(
+                          task['task'],
+                          style: const TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                       ),
+                    ),
                     );
                   },
                 );
