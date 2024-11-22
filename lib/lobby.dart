@@ -84,6 +84,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   child: TextFormField(
                     controller: _controller,
                     maxLength: 8,
+                    style: TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(color: Color.fromARGB(255, 140, 140, 140)),
                       hintText: "Введите до 8 символов",

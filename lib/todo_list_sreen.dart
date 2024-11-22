@@ -26,9 +26,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
         .collection("todo");
   }
 
-  void _addTodo() async {
-    if (_controller.text.isNotEmpty && _todos != null) {
-      await _todos!.add({'task': _controller.text, 'created_at': Timestamp.now()});
+  void _addTodo() {
+    if (_controller.text.isNotEmpty) {
+      _todos?.add({
+        'task': _controller.text,
+        'created_at': Timestamp.now(),
+      });
+
+      // Очищаем поле после добавления задачи
       _controller.clear();
     }
   }
@@ -49,11 +54,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
             context: context,
              builder: (BuildContext context) {
               return AlertDialog(
-                backgroundColor: Color(0xff212529),
+                backgroundColor:const Color(0xff212529),
                 title: const Text("добавить задачу", style: TextStyle(color: Colors.white),),
                 content: Form(child: 
                 TextField(
                     controller: _controller,
+                    style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       labelStyle: TextStyle(color: Colors.white),
                       labelText: 'новая задача',
@@ -109,6 +115,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             _removeTodoAtIndex(task.id);
                           },
                           color: Colors.red,
+                          performsFirstActionWithFullSwipe: true
                         ),
                       ],
                       child: Container(
@@ -131,3 +138,5 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 }
+
+
