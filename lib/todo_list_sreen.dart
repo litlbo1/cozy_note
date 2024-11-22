@@ -3,7 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoListScreen extends StatefulWidget {
   final String groupId;
-  const TodoListScreen({super.key, required this.groupId});
+  final dynamic groupName;
+  final groupColor;
+
+  const TodoListScreen({super.key, required this.groupId, required this.groupName, required this.groupColor});
 
   @override
   _TodoListScreenState createState() => _TodoListScreenState();
@@ -38,31 +41,48 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff121212),
-      appBar: AppBar(
-        title: const Text('To-Do List'),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          showDialog(
+            context: context,
+             builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Color(0xff212529),
+                title: const Text("добавить задачу", style: TextStyle(color: Colors.white),),
+                content: Form(child: 
+                TextField(
                     controller: _controller,
                     decoration: const InputDecoration(
-                      labelText: 'New task',
+                      labelStyle: TextStyle(color: Colors.white),
+                      labelText: 'новая задача',
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: _addTodo,
-                ),
-              ],
-            ),
-          ),
+                    actions: [
+                    Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.add, color: Colors.white,),
+                          onPressed: _addTodo,
+                      ),
+                    ],
+                    ),
+                  ),
+                ],
+              );
+             });
+        },
+        child: const Icon(Icons.add, color: Colors.black, size: 28),),
+      backgroundColor: const Color(0xff121212),
+      appBar: AppBar(
+        backgroundColor: Color(widget.groupColor as int),
+        title: Text(widget.groupName),
+      ),
+      body: Column(
+        children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: _todos?.orderBy('created_at', descending: true).snapshots(),
@@ -74,7 +94,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   itemBuilder: (context, index) {
                     final task = tasks[index];
                     return ListTile(
-                      title: Text(task['task']),
+                      title: Text(task['task'], style: const TextStyle(color: Colors.white, fontSize: 20),),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () => _removeTodoAtIndex(task.id),

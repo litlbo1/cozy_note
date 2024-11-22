@@ -77,13 +77,15 @@ class _LobbyScreenState extends State<LobbyScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Добавить группу"),
+                backgroundColor: Color(0xff212529),
+                title: const Text("Добавить группу", style: TextStyle(color: Colors.white),),
                 content: Form(
                   key: _formKey,
                   child: TextFormField(
                     controller: _controller,
                     maxLength: 8,
                     decoration: const InputDecoration(
+                      hintStyle: TextStyle(color: Color.fromARGB(255, 140, 140, 140)),
                       hintText: "Введите до 8 символов",
                     ),
                     validator: (value) {
@@ -110,8 +112,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       }
                       },
                       child: Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xffe9c46a)),
                         child: const Center(child: Text("Orange")),),
                     ),
@@ -128,8 +130,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       }
                       },
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 60,
+                      height: 60,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xff2a9d8f)),
                       child: const Center(child: Text("blue")),),
                   ),
@@ -147,8 +149,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
                       }
                       },
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 60,
+                      height: 60,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: const Color(0xffe76f51)),
                       child: const Center(child: Text("red")),),
                   ),
@@ -160,18 +162,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     children: [
                       TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("Отмена", style: TextStyle(color: Color.fromARGB(255, 13, 96, 56)),),
+                    child: const Text("Отмена", style: TextStyle(color: Color.fromARGB(255, 184, 47, 37)),),
                   ),
-                  // ElevatedButton(onPressed: () {}, child: const Text("тема", style: TextStyle(color: Colors.indigo),)),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     if (_formKey.currentState!.validate()) {
-                  //       _addGroup();
-                  //       Navigator.of(context).pop();
-                  //     }
-                  //   },
-                  //   child: const Text("Сохранить", style: TextStyle(color: Colors.indigo)),
-                  // ),
                     ],
                   )
                   
@@ -250,7 +242,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                         ),
                       ),
                     ),
-                    openBuilder: (context, _) => TodoListScreen(groupId: groupData.id),
+                    openBuilder: (context, _) => TodoListScreen(groupId: groupData.id, groupName: groupData['group'], groupColor: groupData['group_color']),
                   )
                 ),
               );
